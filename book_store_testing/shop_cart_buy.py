@@ -68,45 +68,51 @@ try:
     search_box.send_keys("Russia")
     time.sleep(2)
 
-# СДАЮСЬ! ДАЛЬШЕ КОД НЕ РАБОТАЕТ И, ГДЕ ОШИБКА, НЕ ПОНИМАЮ............
-
-    # Поиск и выбор элемента из выпадающего списка
-    russia_option = driver.find_element(By.XPATH, "//*[@id='billing_country']/option[183]")
-    russia_option.click()
+    country_second_field = driver.find_element(By.CLASS_NAME, "select2-match")
+    country_second_field.click()
+    time.sleep(2)
 
     address = driver.find_element(By.ID, "billing_address_1")
     address.send_keys("Test address")
+    time.sleep(2)
 
     city = driver.find_element(By.ID, "billing_city")
     city.send_keys("Moscow")
+    time.sleep(2)
 
     state = driver.find_element(By.ID, "billing_state")
     state.send_keys("Moscow")
+    time.sleep(2)
 
     postcode = driver.find_element(By.ID, "billing_postcode")
     postcode.send_keys("123456")
+    time.sleep(2)
 
     # 7. Выберите способ оплаты "Check Payments"
     driver.execute_script("window.scrollBy(0, 600);")
     time.sleep(3)
     check_payments = driver.find_element(By.ID, "payment_method_cheque")
     check_payments.click()
+    time.sleep(2)
 
     # 8. Нажмите PLACE ORDER
     place_order_button = driver.find_element(By.ID, "place_order")
     place_order_button.click()
+    time.sleep(2)
 
     # 9. Проверьте, что отображается надпись "Thank you. Your order has been received."
     thank_you_message = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "p.woocommerce-thankyou-order-received"))
     )
     assert thank_you_message.text == "Thank you. Your order has been received.", "Неверное сообщение после оформления заказа."
+    time.sleep(2)
 
     # 10. Проверьте, что в Payment Method отображается текст "Check Payments"
     payment_method = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "table.shop_table.order_details tfoot tr:nth-child(3) td"))
     )
     assert payment_method.text == "Check Payments", "Неверный способ оплаты."
+    time.sleep(2)
 
 finally:
     # Закрытие браузера
